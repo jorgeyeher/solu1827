@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://b4y3x1sjjeo8r"]
+
+[ext_resource type="Script" uid="uid://b5unsvnbfa74m" path="res://scripts/menus/menu_principal.gd" id="1_bj1uy"]
+
+[node name="MenuPrincipal" type="Control" unique_id=1071184695]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bj1uy")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1052936381]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.034531433, 0.19602978, 2.4065375e-08, 1)
+
+[node name="Label" type="Label" parent="." unique_id=1131827587]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "FOOTBALL PIXEL"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1488942227]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BtnNuevaPartida" type="Button" parent="VBoxContainer" unique_id=1518317861]
+layout_mode = 2
+text = "NUEVA PARTIDA"
+
+[node name="BtnCargar" type="Button" parent="VBoxContainer" unique_id=246001375]
+layout_mode = 2
+text = "CARGAR PARTIDA"
+
+[node name="BtnSalir" type="Button" parent="VBoxContainer" unique_id=508417581]
+layout_mode = 2
+text = "SALIR DEL JUEGO"

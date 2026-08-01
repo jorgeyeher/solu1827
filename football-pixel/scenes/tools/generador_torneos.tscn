@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bodcgbupm86l8"]
+
+[ext_resource type="Script" uid="uid://dklein8gh3m0f" path="res://scripts/tools/generador_torneos.gd" id="1_48twl"]
+
+[node name="GeneradorTorneos" type="Control" unique_id=1257461172]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_48twl")
+
+[node name="Button" type="Button" parent="." unique_id=430637510]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "GENERAR CALENDARIO (TEMPORADA 1)"

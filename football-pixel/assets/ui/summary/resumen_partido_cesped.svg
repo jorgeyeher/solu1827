@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#7fbe37"/>
+  <rect x="0" y="0" width="160" height="1080" fill="#6fb12e"/>
+  <rect x="240" y="0" width="140" height="1080" fill="#6aa72d"/>
+  <rect x="520" y="0" width="160" height="1080" fill="#6fb12e"/>
+  <rect x="820" y="0" width="140" height="1080" fill="#6aa72d"/>
+  <rect x="1100" y="0" width="160" height="1080" fill="#6fb12e"/>
+  <rect x="1400" y="0" width="140" height="1080" fill="#6aa72d"/>
+  <rect x="1680" y="0" width="160" height="1080" fill="#6fb12e"/>
+  <rect x="0" y="0" width="1920" height="1080" fill="url(#fade)"/>
+  <defs>
+    <linearGradient id="fade" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#17350e" stop-opacity="0.14"/>
+    </linearGradient>
+  </defs>
+</svg>

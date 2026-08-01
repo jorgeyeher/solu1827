@@ -1,0 +1,163 @@
+[gd_scene format=3 uid="uid://cgcj0gypbnyr8"]
+
+[ext_resource type="Script" uid="uid://dfgau0hnec1qk" path="res://scripts/match/simulacion_partido.gd" id="1_scene"]
+[ext_resource type="Script" uid="uid://dnfakyqbjqaca" path="res://scripts/match/simulacion_partido_field.gd" id="2_field"]
+
+[node name="SimulacionPartido" type="Control" unique_id=588122781]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_scene")
+
+[node name="Campo" type="Control" parent="." unique_id=1733394352]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_field")
+
+[node name="Overlay" type="Control" parent="." unique_id=2005108987]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BtnPausa" type="Button" parent="Overlay" unique_id=1137070426]
+layout_mode = 0
+offset_left = 338.0
+offset_top = 448.0
+offset_right = 478.0
+offset_bottom = 588.0
+text = "II"
+
+[node name="ScoreShadow" type="ColorRect" parent="Overlay" unique_id=490119335]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -334.0
+offset_top = 407.0
+offset_right = 354.0
+offset_bottom = 629.0
+grow_horizontal = 2
+color = Color(0, 0, 0, 0.28)
+
+[node name="Scoreboard" type="PanelContainer" parent="Overlay" unique_id=1934859823]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -344.0
+offset_top = 391.0
+offset_right = 344.0
+offset_bottom = 613.0
+grow_horizontal = 2
+
+[node name="ScoreMargin" type="MarginContainer" parent="Overlay/Scoreboard" unique_id=1428543267]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 18
+
+[node name="ScoreRow" type="HBoxContainer" parent="Overlay/Scoreboard/ScoreMargin" unique_id=2027093994]
+layout_mode = 2
+theme_override_constants/separation = 34
+alignment = 1
+
+[node name="LocalBox" type="VBoxContainer" parent="Overlay/Scoreboard/ScoreMargin/ScoreRow" unique_id=443627688]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelLocal" type="Label" parent="Overlay/Scoreboard/ScoreMargin/ScoreRow/LocalBox" unique_id=431220622]
+layout_mode = 2
+text = "LOCAL"
+horizontal_alignment = 1
+
+[node name="ScorePanel" type="PanelContainer" parent="Overlay/Scoreboard/ScoreMargin/ScoreRow/LocalBox" unique_id=1126359903]
+custom_minimum_size = Vector2(110, 118)
+layout_mode = 2
+
+[node name="LabelGolesLocal" type="Label" parent="Overlay/Scoreboard/ScoreMargin/ScoreRow/LocalBox/ScorePanel" unique_id=1624637871]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CenterBox" type="VBoxContainer" parent="Overlay/Scoreboard/ScoreMargin/ScoreRow" unique_id=1881154575]
+custom_minimum_size = Vector2(230, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="LabelMinuto" type="Label" parent="Overlay/Scoreboard/ScoreMargin/ScoreRow/CenterBox" unique_id=1541379606]
+layout_mode = 2
+text = "45'"
+horizontal_alignment = 1
+
+[node name="LabelPeriodo" type="Label" parent="Overlay/Scoreboard/ScoreMargin/ScoreRow/CenterBox" unique_id=1683982635]
+layout_mode = 2
+text = "1A MITAD"
+horizontal_alignment = 1
+
+[node name="VisitanteBox" type="VBoxContainer" parent="Overlay/Scoreboard/ScoreMargin/ScoreRow" unique_id=1730335754]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelVisitante" type="Label" parent="Overlay/Scoreboard/ScoreMargin/ScoreRow/VisitanteBox" unique_id=1378910640]
+layout_mode = 2
+text = "VISIT"
+horizontal_alignment = 1
+
+[node name="ScorePanel" type="PanelContainer" parent="Overlay/Scoreboard/ScoreMargin/ScoreRow/VisitanteBox" unique_id=370217990]
+custom_minimum_size = Vector2(110, 118)
+layout_mode = 2
+
+[node name="LabelGolesVisitante" type="Label" parent="Overlay/Scoreboard/ScoreMargin/ScoreRow/VisitanteBox/ScorePanel" unique_id=777016377]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ComentariosShadow" type="ColorRect" parent="Overlay" unique_id=1383126809]
+layout_mode = 0
+offset_left = 612.0
+offset_top = 669.0
+offset_right = 1338.0
+offset_bottom = 981.0
+color = Color(0, 0, 0, 0.2)
+
+[node name="ComentariosPanel" type="PanelContainer" parent="Overlay" unique_id=1269366098]
+layout_mode = 0
+offset_left = 596.0
+offset_top = 653.0
+offset_right = 1322.0
+offset_bottom = 965.0
+
+[node name="ComentariosMargin" type="MarginContainer" parent="Overlay/ComentariosPanel" unique_id=66913786]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 34
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 34
+
+[node name="Comentarios" type="Label" parent="Overlay/ComentariosPanel/ComentariosMargin" unique_id=422824819]
+layout_mode = 2
+size_flags_vertical = 3
+text = "OPORTUNIDAD
+PARA LOS
+LOCALES!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="TimerPartido" type="Timer" parent="." unique_id=1653469753]

@@ -1,0 +1,238 @@
+[gd_scene format=3 uid="uid://eqckxd6w8cb"]
+
+[ext_resource type="Script" path="res://scripts/career/crear_partida.gd" id="1_s76nb"]
+[ext_resource type="Script" path="res://scripts/ui/club_preview.gd" id="2_preview"]
+
+[node name="CrearPartida" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s76nb")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.07, 0.11, 0.08, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Root" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Titulo" type="Label" parent="MarginContainer/Root"]
+layout_mode = 2
+text = "CREAR PARTIDA"
+horizontal_alignment = 1
+
+[node name="Subtitulo" type="Label" parent="MarginContainer/Root"]
+layout_mode = 2
+text = "Define el club, ajusta uniforme y escudo, y firma tu carrera."
+horizontal_alignment = 1
+
+[node name="Content" type="HBoxContainer" parent="MarginContainer/Root"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 18
+
+[node name="LeftPanel" type="PanelContainer" parent="MarginContainer/Root/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/Root/Content/LeftPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 18
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/Root/Content/LeftPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="InputManager" type="LineEdit" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox"]
+layout_mode = 2
+placeholder_text = "Nombre del manager"
+
+[node name="FilaLiga" type="HBoxContainer" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelLiga" type="Label" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/FilaLiga"]
+layout_mode = 2
+text = "Liga"
+
+[node name="SelectorLiga" type="OptionButton" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/FilaLiga"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FilaEquipo" type="HBoxContainer" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelEquipo" type="Label" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/FilaEquipo"]
+layout_mode = 2
+text = "Equipo"
+
+[node name="SelectorEquipo" type="OptionButton" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/FilaEquipo"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DatosClub" type="GridContainer" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox"]
+layout_mode = 2
+columns = 2
+
+[node name="LabelNombreEquipo" type="Label" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/DatosClub"]
+layout_mode = 2
+text = "Nombre del club"
+
+[node name="InputNombreEquipo" type="LineEdit" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/DatosClub"]
+layout_mode = 2
+
+[node name="LabelPresidente" type="Label" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/DatosClub"]
+layout_mode = 2
+text = "Presidente"
+
+[node name="InputPresidente" type="LineEdit" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/DatosClub"]
+layout_mode = 2
+
+[node name="LabelEstadio" type="Label" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/DatosClub"]
+layout_mode = 2
+text = "Estadio"
+
+[node name="InputEstadio" type="LineEdit" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/DatosClub"]
+layout_mode = 2
+
+[node name="Uniformes" type="VBoxContainer" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TituloUniforme" type="Label" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/Uniformes"]
+layout_mode = 2
+text = "Uniforme"
+
+[node name="Grid" type="GridContainer" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/Uniformes"]
+layout_mode = 2
+columns = 2
+
+[node name="LabelCamiseta" type="Label" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/Uniformes/Grid"]
+layout_mode = 2
+text = "Camiseta"
+
+[node name="ColorCamiseta" type="OptionButton" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/Uniformes/Grid"]
+layout_mode = 2
+
+[node name="LabelShorts" type="Label" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/Uniformes/Grid"]
+layout_mode = 2
+text = "Shorts"
+
+[node name="ColorShorts" type="OptionButton" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/Uniformes/Grid"]
+layout_mode = 2
+
+[node name="LabelCalcetas" type="Label" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/Uniformes/Grid"]
+layout_mode = 2
+text = "Calcetas"
+
+[node name="ColorCalcetas" type="OptionButton" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/Uniformes/Grid"]
+layout_mode = 2
+
+[node name="Escudo" type="VBoxContainer" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TituloEscudo" type="Label" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/Escudo"]
+layout_mode = 2
+text = "Escudo"
+
+[node name="Grid" type="GridContainer" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/Escudo"]
+layout_mode = 2
+columns = 2
+
+[node name="LabelPatronEscudo" type="Label" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/Escudo/Grid"]
+layout_mode = 2
+text = "Patron"
+
+[node name="PatronEscudo" type="OptionButton" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/Escudo/Grid"]
+layout_mode = 2
+
+[node name="LabelEscudoPrimario" type="Label" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/Escudo/Grid"]
+layout_mode = 2
+text = "Color primario"
+
+[node name="ColorEscudoPrimario" type="OptionButton" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/Escudo/Grid"]
+layout_mode = 2
+
+[node name="LabelEscudoSecundario" type="Label" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/Escudo/Grid"]
+layout_mode = 2
+text = "Color secundario"
+
+[node name="ColorEscudoSecundario" type="OptionButton" parent="MarginContainer/Root/Content/LeftPanel/Margin/VBox/Escudo/Grid"]
+layout_mode = 2
+
+[node name="RightPanel" type="PanelContainer" parent="MarginContainer/Root/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/Root/Content/RightPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 18
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/Root/Content/RightPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="PreviewTitle" type="Label" parent="MarginContainer/Root/Content/RightPanel/Margin/VBox"]
+layout_mode = 2
+text = "Vista previa del club"
+horizontal_alignment = 1
+
+[node name="ClubPreview" type="Control" parent="MarginContainer/Root/Content/RightPanel/Margin/VBox"]
+custom_minimum_size = Vector2(360, 300)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_preview")
+
+[node name="Resumen" type="Label" parent="MarginContainer/Root/Content/RightPanel/Margin/VBox"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Liga:\nClub:\nPresidente:\nEstadio:\nManager:"
+
+[node name="Botones" type="HBoxContainer" parent="MarginContainer/Root"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 14
+
+[node name="BtnVolver" type="Button" parent="MarginContainer/Root/Botones"]
+layout_mode = 2
+text = "VOLVER AL MENU"
+
+[node name="BtnEmpezar" type="Button" parent="MarginContainer/Root/Botones"]
+layout_mode = 2
+text = "FIRMAR Y CREAR PARTIDA"
+
+[node name="Estado" type="Label" parent="MarginContainer/Root"]
+layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 3
+text = "Elige un club y personalizalo antes de empezar."

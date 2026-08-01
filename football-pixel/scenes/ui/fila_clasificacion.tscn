@@ -1,0 +1,49 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/fila_clasificacion.gd" id="1_script"]
+
+[node name="FilaClasificacion" type="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("1_script")
+
+[node name="Posicion" type="Label" parent="."]
+layout_mode = 2
+text = "1"
+
+[node name="NombreEquipo" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "LONDRES"
+
+[node name="PJ" type="Label" parent="."]
+layout_mode = 2
+text = "10"
+
+[node name="V" type="Label" parent="."]
+layout_mode = 2
+text = "7"
+
+[node name="E" type="Label" parent="."]
+layout_mode = 2
+text = "2"
+
+[node name="D" type="Label" parent="."]
+layout_mode = 2
+text = "1"
+
+[node name="GF" type="Label" parent="."]
+layout_mode = 2
+text = "18"
+
+[node name="GC" type="Label" parent="."]
+layout_mode = 2
+text = "8"
+
+[node name="DG" type="Label" parent="."]
+layout_mode = 2
+text = "+10"
+
+[node name="Puntos" type="Label" parent="."]
+layout_mode = 2
+text = "23"

@@ -1,0 +1,513 @@
+[gd_scene format=3 uid="uid://dxj2e4twkip8w"]
+
+[ext_resource type="Script" uid="uid://c1q801ek7mnxb" path="res://scripts/match/resumen_partido.gd" id="1_6cjmc"]
+[ext_resource type="Texture2D" uid="uid://cp2t2vedrve1y" path="res://assets/ui/summary/resumen_partido_cesped.svg" id="1_grass"]
+[ext_resource type="Texture2D" uid="uid://d3vjr04rek1jh" path="res://assets/ui/summary/resumen_partido_avatar.svg" id="2_avatar"]
+[ext_resource type="Texture2D" uid="uid://crpyn85wxpecn" path="res://assets/ui/summary/resumen_partido_flecha.svg" id="3_arrow"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_main"]
+bg_color = Color(0.980392, 0.980392, 0.980392, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.478431, 0.478431, 0.478431, 1)
+shadow_size = 8
+shadow_offset = Vector2(12, 12)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_cian"]
+bg_color = Color(0, 0.705882, 0.847059, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_stats"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.101961, 0.568627, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.901961, 0.196078, 0.235294, 1)
+shadow_size = 6
+shadow_offset = Vector2(10, 10)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_num_local"]
+bg_color = Color(0.0627451, 0.564706, 1, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_num_visita"]
+bg_color = Color(0.921569, 0.192157, 0.235294, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_tabla"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.560784, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.901961, 0.196078, 0.235294, 1)
+shadow_size = 6
+shadow_offset = Vector2(10, 10)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_tabla_row"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+shadow_size = 6
+shadow_offset = Vector2(8, 8)
+
+[node name="ResumenPartido" type="Control" unique_id=1779570504]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6cjmc")
+
+[node name="FondoCancha" type="TextureRect" parent="." unique_id=2080663463]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_grass")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="MargenPantalla" type="MarginContainer" parent="." unique_id=478896234]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 80
+
+[node name="HBoxPrincipal" type="HBoxContainer" parent="MargenPantalla" unique_id=719001119]
+layout_mode = 2
+theme_override_constants/separation = 60
+
+[node name="PanelMVP" type="PanelContainer" parent="MargenPantalla/HBoxPrincipal" unique_id=1780071792]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_main")
+
+[node name="MarginMVP" type="MarginContainer" parent="MargenPantalla/HBoxPrincipal/PanelMVP" unique_id=1899517126]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxMVP" type="VBoxContainer" parent="MargenPantalla/HBoxPrincipal/PanelMVP/MarginMVP" unique_id=800325224]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="TituloMVP" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelMVP/MarginMVP/VBoxMVP" unique_id=535485514]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.811765, 0.156863, 1)
+theme_override_colors/font_outline_color = Color(0.364706, 0.364706, 0.364706, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 56
+text = "MVP"
+horizontal_alignment = 1
+
+[node name="MargenAvatar" type="MarginContainer" parent="MargenPantalla/HBoxPrincipal/PanelMVP/MarginMVP/VBoxMVP" unique_id=353769122]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_right = 30
+
+[node name="Avatar" type="TextureRect" parent="MargenPantalla/HBoxPrincipal/PanelMVP/MarginMVP/VBoxMVP/MargenAvatar" unique_id=68201956]
+custom_minimum_size = Vector2(0, 260)
+layout_mode = 2
+texture = ExtResource("2_avatar")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Nombre" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelMVP/MarginMVP/VBoxMVP" unique_id=165250192]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.109804, 0.109804, 0.109804, 1)
+theme_override_font_sizes/font_size = 34
+text = "Jorge Luis"
+horizontal_alignment = 1
+
+[node name="MargenPosicion" type="MarginContainer" parent="MargenPantalla/HBoxPrincipal/PanelMVP/MarginMVP/VBoxMVP" unique_id=1302522603]
+layout_mode = 2
+theme_override_constants/margin_left = 70
+theme_override_constants/margin_right = 70
+
+[node name="PanelCian" type="PanelContainer" parent="MargenPantalla/HBoxPrincipal/PanelMVP/MarginMVP/VBoxMVP/MargenPosicion" unique_id=608825607]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_cian")
+
+[node name="TextoPosicion" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelMVP/MarginMVP/VBoxMVP/MargenPosicion/PanelCian" unique_id=1452388007]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
+text = "DC"
+horizontal_alignment = 1
+
+[node name="MargenStats" type="MarginContainer" parent="MargenPantalla/HBoxPrincipal/PanelMVP/MarginMVP/VBoxMVP" unique_id=1844373592]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="PanelStatsMVP" type="PanelContainer" parent="MargenPantalla/HBoxPrincipal/PanelMVP/MarginMVP/VBoxMVP/MargenStats" unique_id=1441982870]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_stats")
+
+[node name="TextoStats" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelMVP/MarginMVP/VBoxMVP/MargenStats/PanelStatsMVP" unique_id=948403739]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+theme_override_font_sizes/font_size = 24
+text = "GOLES 1
+ASISTENCIAS 1
+VALORACION 9.5"
+horizontal_alignment = 1
+
+[node name="PanelResumen" type="PanelContainer" parent="MargenPantalla/HBoxPrincipal" unique_id=336806561]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.5
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_main")
+
+[node name="MarginResumen" type="MarginContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen" unique_id=767405504]
+layout_mode = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 60
+
+[node name="VBoxResumen" type="VBoxContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen" unique_id=1604053230]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="Titulo" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen" unique_id=1472534100]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.109804, 0.109804, 0.109804, 1)
+theme_override_font_sizes/font_size = 58
+text = "FINAL DEL
+PARTIDO"
+horizontal_alignment = 1
+
+[node name="HBoxEquipos" type="HBoxContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen" unique_id=1946371756]
+layout_mode = 2
+
+[node name="NombreLocal" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/HBoxEquipos" unique_id=1840384591]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.109804, 0.109804, 0.109804, 1)
+theme_override_font_sizes/font_size = 40
+text = "LONDRES"
+
+[node name="Espacio" type="Control" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/HBoxEquipos" unique_id=927209020]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NombreVisita" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/HBoxEquipos" unique_id=1662964574]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.109804, 0.109804, 0.109804, 1)
+theme_override_font_sizes/font_size = 40
+text = "ATL LEO."
+
+[node name="VBoxEstadisticas" type="VBoxContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen" unique_id=374595473]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="FilaGoles" type="HBoxContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas" unique_id=835168938]
+layout_mode = 2
+
+[node name="PnlNumLocal" type="PanelContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaGoles" unique_id=819969009]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_num_local")
+
+[node name="Numero" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaGoles/PnlNumLocal" unique_id=698280086]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "2"
+horizontal_alignment = 1
+
+[node name="EspIzq" type="Control" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaGoles" unique_id=1874951067]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Etiqueta" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaGoles" unique_id=423151592]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.109804, 0.109804, 0.109804, 1)
+theme_override_font_sizes/font_size = 28
+text = "GOLES"
+horizontal_alignment = 1
+
+[node name="EspDer" type="Control" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaGoles" unique_id=461374072]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PnlNumVisita" type="PanelContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaGoles" unique_id=1706415341]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_num_visita")
+
+[node name="Numero" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaGoles/PnlNumVisita" unique_id=1468595976]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "0"
+horizontal_alignment = 1
+
+[node name="FilaPosesion" type="HBoxContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas" unique_id=105966931]
+layout_mode = 2
+
+[node name="PnlNumLocal" type="PanelContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaPosesion" unique_id=1426462623]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_num_local")
+
+[node name="Numero" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaPosesion/PnlNumLocal" unique_id=1985689129]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "54%"
+horizontal_alignment = 1
+
+[node name="EspIzq" type="Control" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaPosesion" unique_id=1789443402]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Etiqueta" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaPosesion" unique_id=157355449]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.109804, 0.109804, 0.109804, 1)
+theme_override_font_sizes/font_size = 28
+text = "POSESION"
+horizontal_alignment = 1
+
+[node name="EspDer" type="Control" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaPosesion" unique_id=1475082812]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PnlNumVisita" type="PanelContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaPosesion" unique_id=131193644]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_num_visita")
+
+[node name="Numero" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaPosesion/PnlNumVisita" unique_id=344121530]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "46%"
+horizontal_alignment = 1
+
+[node name="FilaTiros" type="HBoxContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas" unique_id=458269313]
+layout_mode = 2
+
+[node name="PnlNumLocal" type="PanelContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaTiros" unique_id=1769069]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_num_local")
+
+[node name="Numero" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaTiros/PnlNumLocal" unique_id=1295045419]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "6"
+horizontal_alignment = 1
+
+[node name="EspIzq" type="Control" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaTiros" unique_id=1443481178]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Etiqueta" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaTiros" unique_id=1438733139]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.109804, 0.109804, 0.109804, 1)
+theme_override_font_sizes/font_size = 28
+text = "TIROS A PUERTA"
+horizontal_alignment = 1
+
+[node name="EspDer" type="Control" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaTiros" unique_id=280933515]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PnlNumVisita" type="PanelContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaTiros" unique_id=63299450]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_num_visita")
+
+[node name="Numero" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaTiros/PnlNumVisita" unique_id=200516436]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "2"
+horizontal_alignment = 1
+
+[node name="FilaFaltas" type="HBoxContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas" unique_id=641198567]
+layout_mode = 2
+
+[node name="PnlNumLocal" type="PanelContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaFaltas" unique_id=2105822623]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_num_local")
+
+[node name="Numero" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaFaltas/PnlNumLocal" unique_id=1035094096]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "9"
+horizontal_alignment = 1
+
+[node name="EspIzq" type="Control" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaFaltas" unique_id=545571980]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Etiqueta" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaFaltas" unique_id=602065777]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.109804, 0.109804, 0.109804, 1)
+theme_override_font_sizes/font_size = 28
+text = "FALTAS"
+horizontal_alignment = 1
+
+[node name="EspDer" type="Control" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaFaltas" unique_id=453468522]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PnlNumVisita" type="PanelContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaFaltas" unique_id=487420218]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_num_visita")
+
+[node name="Numero" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/VBoxEstadisticas/FilaFaltas/PnlNumVisita" unique_id=684829240]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "12"
+horizontal_alignment = 1
+
+[node name="MargenPosicion" type="MarginContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen" unique_id=89491339]
+layout_mode = 2
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_right = 150
+
+[node name="PanelTabla" type="PanelContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/MargenPosicion" unique_id=1505492719]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_tabla")
+
+[node name="MarginInterno" type="MarginContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/MargenPosicion/PanelTabla" unique_id=1938027858]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxTabla" type="VBoxContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/MargenPosicion/PanelTabla/MarginInterno" unique_id=934793826]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="TituloTabla" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/MargenPosicion/PanelTabla/MarginInterno/VBoxTabla" unique_id=321709165]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.109804, 0.109804, 0.109804, 1)
+theme_override_font_sizes/font_size = 30
+text = "POSICION"
+horizontal_alignment = 1
+
+[node name="PanelLocal" type="PanelContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/MargenPosicion/PanelTabla/MarginInterno/VBoxTabla" unique_id=355947443]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_tabla_row")
+
+[node name="HBoxLocal" type="HBoxContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/MargenPosicion/PanelTabla/MarginInterno/VBoxTabla/PanelLocal" unique_id=1431781941]
+layout_mode = 2
+
+[node name="TextoLocal" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/MargenPosicion/PanelTabla/MarginInterno/VBoxTabla/PanelLocal/HBoxLocal" unique_id=1827779007]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.109804, 0.109804, 0.109804, 1)
+theme_override_font_sizes/font_size = 24
+text = "2 LONDRES"
+
+[node name="IconoLocal" type="TextureRect" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/MargenPosicion/PanelTabla/MarginInterno/VBoxTabla/PanelLocal/HBoxLocal" unique_id=461302888]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("3_arrow")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PanelVisita" type="PanelContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/MargenPosicion/PanelTabla/MarginInterno/VBoxTabla" unique_id=1876415998]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_tabla_row")
+
+[node name="HBoxVisita" type="HBoxContainer" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/MargenPosicion/PanelTabla/MarginInterno/VBoxTabla/PanelVisita" unique_id=2133154202]
+layout_mode = 2
+
+[node name="TextoVisita" type="Label" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/MargenPosicion/PanelTabla/MarginInterno/VBoxTabla/PanelVisita/HBoxVisita" unique_id=1705999699]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.109804, 0.109804, 0.109804, 1)
+theme_override_font_sizes/font_size = 24
+text = "4 ATL LEO"
+
+[node name="IconoVisita" type="TextureRect" parent="MargenPantalla/HBoxPrincipal/PanelResumen/MarginResumen/VBoxResumen/MargenPosicion/PanelTabla/MarginInterno/VBoxTabla/PanelVisita/HBoxVisita" unique_id=446619783]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("3_arrow")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MarginBoton" type="MarginContainer" parent="." unique_id=1442701338]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -360.0
+offset_top = -130.0
+offset_right = -50.0
+offset_bottom = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="BtnMenu" type="Button" parent="MarginBoton" unique_id=939473092]
+custom_minimum_size = Vector2(250, 80)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+theme_override_colors/font_pressed_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+theme_override_colors/font_hover_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button")
+text = "IR AL MENU"

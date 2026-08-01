@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://c4v7sax2n5aw0"]
+
+[ext_resource type="Script" uid="uid://bbhpk8i5ag8cb" path="res://scripts/tools/generador_jugadores.gd" id="1_rlyyv"]
+
+[node name="GeneradorJugadores" type="Control" unique_id=620291269]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rlyyv")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1330381097]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.11, 0.08, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1144141637]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1428338826]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Titulo" type="Label" parent="MarginContainer/VBoxContainer" unique_id=970088435]
+layout_mode = 2
+text = "GENERADOR DE JUGADORES"
+horizontal_alignment = 1
+
+[node name="Estado" type="Label" parent="MarginContainer/VBoxContainer" unique_id=265342027]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Listo para poblar plantillas."
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="BtnGenerar" type="Button" parent="MarginContainer/VBoxContainer" unique_id=865609519]
+layout_mode = 2
+text = "GENERAR HASTA 23 POR EQUIPO"
+
+[node name="BtnVolver" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1894298196]
+layout_mode = 2
+text = "VOLVER AL MENU"

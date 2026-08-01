@@ -1,0 +1,143 @@
+[gd_scene format=3 uid="uid://c31s8ml4l7s8y"]
+
+[ext_resource type="Script" uid="uid://c37x0y3qls58t" path="res://scripts/career/submenu_plantilla.gd" id="1_submenu"]
+[ext_resource type="Script" path="res://scripts/ui/pitch_view.gd" id="2_pitch"]
+
+[node name="SubmenuPlantilla" type="Control" unique_id=201238166]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_submenu")
+
+[node name="Background" type="ColorRect" parent="." unique_id=607147709]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.95, 0.95, 0.93, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=776134465]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer" unique_id=276143259]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Root" type="VBoxContainer" parent="MarginContainer/ScrollContainer" unique_id=1076886059]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/ScrollContainer/Root" unique_id=459565263]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Titulo" type="Label" parent="MarginContainer/ScrollContainer/Root/Header" unique_id=691933112]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "PLANTILLA"
+horizontal_alignment = 1
+
+[node name="SelectorFormacion" type="OptionButton" parent="MarginContainer/ScrollContainer/Root/Header" unique_id=204094531]
+layout_mode = 2
+
+[node name="BtnGuardar" type="Button" parent="MarginContainer/ScrollContainer/Root/Header"]
+layout_mode = 2
+text = "GUARDAR"
+
+[node name="BtnVolver" type="Button" parent="MarginContainer/ScrollContainer/Root/Header" unique_id=2123139268]
+layout_mode = 2
+text = "VOLVER"
+
+[node name="CampoPanel" type="PanelContainer" parent="MarginContainer/ScrollContainer/Root" unique_id=1924635643]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Campo" type="Control" parent="MarginContainer/ScrollContainer/Root/CampoPanel" unique_id=1638964148]
+custom_minimum_size = Vector2(980, 520)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="FieldLines" type="Control" parent="MarginContainer/ScrollContainer/Root/CampoPanel/Campo" unique_id=672110738]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_pitch")
+
+[node name="BancaPanel" type="PanelContainer" parent="MarginContainer/ScrollContainer/Root" unique_id=1992287876]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BancaLayout" type="HBoxContainer" parent="MarginContainer/ScrollContainer/Root/BancaPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="BancaBox" type="VBoxContainer" parent="MarginContainer/ScrollContainer/Root/BancaPanel/BancaLayout" unique_id=863712044]
+custom_minimum_size = Vector2(392, 0)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TituloBanca" type="Label" parent="MarginContainer/ScrollContainer/Root/BancaPanel/BancaLayout/BancaBox" unique_id=1975141438]
+layout_mode = 2
+text = "BANCA"
+horizontal_alignment = 1
+
+[node name="BancaGrid" type="GridContainer" parent="MarginContainer/ScrollContainer/Root/BancaPanel/BancaLayout/BancaBox" unique_id=1636867730]
+layout_mode = 2
+columns = 4
+
+[node name="FichaPanel" type="PanelContainer" parent="MarginContainer/ScrollContainer/Root/BancaPanel/BancaLayout"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FichaBox" type="VBoxContainer" parent="MarginContainer/ScrollContainer/Root/BancaPanel/BancaLayout/FichaPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="FichaTitulo" type="Label" parent="MarginContainer/ScrollContainer/Root/BancaPanel/BancaLayout/FichaPanel/FichaBox"]
+layout_mode = 2
+text = "JUGADOR SELECCIONADO"
+horizontal_alignment = 1
+
+[node name="NombreJugador" type="Label" parent="MarginContainer/ScrollContainer/Root/BancaPanel/BancaLayout/FichaPanel/FichaBox" unique_id=763326402]
+layout_mode = 2
+text = "Sin seleccion"
+horizontal_alignment = 1
+
+[node name="Subtitulo" type="Label" parent="MarginContainer/ScrollContainer/Root/BancaPanel/BancaLayout/FichaPanel/FichaBox" unique_id=361887531]
+layout_mode = 2
+text = "Toca un jugador para ver su ficha."
+horizontal_alignment = 1
+
+[node name="Stats" type="Label" parent="MarginContainer/ScrollContainer/Root/BancaPanel/BancaLayout/FichaPanel/FichaBox" unique_id=2028315983]
+layout_mode = 2
+size_flags_vertical = 3
+autowrap_mode = 3
+
+[node name="Estado" type="Label" parent="MarginContainer/ScrollContainer/Root" unique_id=1606384113]
+layout_mode = 2
+text = "Plantilla cargada."
+horizontal_alignment = 1
+autowrap_mode = 3

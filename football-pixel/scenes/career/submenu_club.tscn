@@ -1,0 +1,119 @@
+[gd_scene format=3 uid="uid://rkjkilwre7yi"]
+
+[ext_resource type="Script" uid="uid://map2dmb02jor" path="res://scripts/career/submenu_club.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://b7gjucrf0wagf" path="res://fonts/PressStart2P-Regular.ttf" id="2_fts3f"]
+[ext_resource type="Texture2D" uid="uid://do0qldrgpul4j" path="res://assets/ui/summary/trofeo_transparente3.0.png" id="3_fts3f"]
+
+[node name="SubmenuClub" type="Control" unique_id=1185048177]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="VBoxPrincipal" type="VBoxContainer" parent="." unique_id=744099918]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Header" type="PanelContainer" parent="VBoxPrincipal" unique_id=551174651]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxHeader" type="HBoxContainer" parent="VBoxPrincipal/Header" unique_id=1249869574]
+layout_mode = 2
+
+[node name="BtnRegresar" type="Button" parent="VBoxPrincipal/Header/HBoxHeader" unique_id=184892171]
+layout_mode = 2
+text = "REGRESAR"
+
+[node name="Titulo" type="Label" parent="VBoxPrincipal/Header/HBoxHeader" unique_id=1983651037]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SUBMENU CLUB"
+horizontal_alignment = 1
+
+[node name="GridOpciones" type="GridContainer" parent="VBoxPrincipal" unique_id=1627192087]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 2
+
+[node name="PanelClasificaciones" type="PanelContainer" parent="VBoxPrincipal/GridOpciones" unique_id=822282596]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="BtnClasificaciones" type="Button" parent="VBoxPrincipal/GridOpciones/PanelClasificaciones" unique_id=141232003]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/icon_max_width = 500
+theme_override_fonts/font = ExtResource("2_fts3f")
+theme_override_font_sizes/font_size = 28
+expand_icon = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxPrincipal/GridOpciones/PanelClasificaciones" unique_id=1019327627]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxPrincipal/GridOpciones/PanelClasificaciones/HBoxContainer" unique_id=381045011]
+clip_contents = true
+custom_minimum_size = Vector2(350, 350)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 1.6
+texture = ExtResource("3_fts3f")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="VBoxPrincipal/GridOpciones/PanelClasificaciones/HBoxContainer" unique_id=2010191884]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_fts3f")
+theme_override_font_sizes/font_size = 30
+text = "CLASIFICACIONES"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelFinanzas" type="PanelContainer" parent="VBoxPrincipal/GridOpciones" unique_id=396449216]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="BtnFinanzas" type="Button" parent="VBoxPrincipal/GridOpciones/PanelFinanzas" unique_id=348341651]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "FINANZAS"
+
+[node name="PanelInstalaciones" type="PanelContainer" parent="VBoxPrincipal/GridOpciones" unique_id=940087176]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="BtnInstalaciones" type="Button" parent="VBoxPrincipal/GridOpciones/PanelInstalaciones" unique_id=1700189178]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "INSTALACIONES"
+
+[node name="PanelHistorial" type="PanelContainer" parent="VBoxPrincipal/GridOpciones" unique_id=577349276]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="BtnHistorial" type="Button" parent="VBoxPrincipal/GridOpciones/PanelHistorial" unique_id=268165962]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "HISTORIAL"
