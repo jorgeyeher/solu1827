@@ -40,25 +40,13 @@ func generar_jugadores_para_todos() -> void:
 				reputacion,
 				total_actual + indice
 			)
-			if insertar_en_bd(jugador_data):
+			var res = PlayerRepository.insert_player(jugador_data)
+			if res.get("success", false):
 				total_insertados += 1
+			else:
+				print("Error insertando en generador_jugadores: ", res.get("error", ""))
 
 	label_estado.text = "Universo creado. Se generaron %d jugadores." % total_insertados
-
-func insertar_en_bd(data: Dictionary) -> bool:
-	var keys = data.keys()
-	var quoted_keys: Array[String] = []
-	var values: Array[String] = []
-
-	for key in keys:
-		quoted_keys.append(DatabaseManager.quote_identifier(str(key)))
-		if data[key] is String:
-			values.append("'%s'" % str(data[key]).replace("'", "''"))
-		else:
-			values.append(str(data[key]))
-
-	var query = "INSERT INTO jugadores (%s) VALUES (%s)" % [",".join(quoted_keys), ",".join(values)]
-	return DatabaseManager.execute(query)
 
 func volver_al_menu() -> void:
 	get_tree().change_scene_to_file("res://scenes/menus/menu_principal.tscn")

@@ -29,7 +29,6 @@ const SHIELD_PATTERNS: Array[String] = [
 @onready var preview_club = $MarginContainer/Root/Content/RightPanel/Margin/VBox/ClubPreview
 
 var equipos_columns: Dictionary = {}
-var jugadores_columns: Array = []
 var liga_actual_nombre := ""
 
 func _ready() -> void:
@@ -73,11 +72,9 @@ func configurar_estilos() -> void:
 		apply_option_theme(selector, Color("fbfbf8"), Color("1a2918"), Color("9ab290"))
 
 func inspeccionar_esquema() -> void:
-	DatabaseManager.ensure_player_schema()
 	var equipos_info = DatabaseManager.fetch_rows("PRAGMA table_info(equipos)")
 	for columna in equipos_info:
 		equipos_columns[str(columna.get("name", ""))] = true
-	jugadores_columns = DatabaseManager.fetch_rows("PRAGMA table_info(jugadores)")
 
 func conectar_eventos() -> void:
 	btn_empezar.pressed.connect(empezar_carrera)
@@ -147,26 +144,30 @@ func empezar_carrera() -> void:
 		label_estado.text = "El nombre del manager y del club son obligatorios."
 		return
 
-	if jugadores_columns.is_empty():
-		jugadores_columns = DatabaseManager.fetch_rows("PRAGMA table_info(jugadores)")
-	if jugadores_columns.is_empty():
-		label_estado.text = "No se pudo leer la tabla jugadores."
-		return
-
 	label_estado.text = "Guardando club y generando plantillas..."
+	GameManager.create_new_save()
+	
 	var equipo_id = selector_equipo.get_selected_id()
 	if not guardar_configuracion_equipo(equipo_id):
 		label_estado.text = "No se pudo guardar la configuracion del club."
 		return
-
-	var generados = generar_jugadores_faltantes_para_todos()
-	GameManager.equipo_jugador_id = equipo_id
+		
+	var custom_seed = randi()
+	PlayerGeneration.current_seed = custom_seed
+	
+	var insertados = generar_jugadores_faltantes_para_todos()
+	var res = CalendarGenerator.generate_all_calendars(1, PlayerGeneration.current_seed)
+	if not res.get("success", false):
+		label_estado.text = "Error generando calendario: " + res.get("error", "")
+		return
+	
+	GameManager.equipo_jugador_id = selector_equipo.get_selected_id()
 	GameManager.manager_nombre = input_manager.text.strip_edges()
 	GameManager.nombre_equipo = input_equipo.text.strip_edges()
 	GameManager.uniforme_club = serializar_visuals()
 	GameManager.save_game("res://scenes/career/menu_plantilla.tscn")
 
-	label_estado.text = "Plantillas listas. Jugadores generados: %d" % generados
+	label_estado.text = "Plantillas listas. Jugadores generados: %d" % insertados
 	get_tree().change_scene_to_file("res://scenes/career/menu_plantilla.tscn")
 
 func guardar_configuracion_equipo(equipo_id: int) -> bool:
@@ -198,60 +199,15 @@ func generar_jugadores_faltantes_para_todos() -> int:
 		var faltantes = maxi(0, PlayerGeneration.SQUAD_TARGET - total_actual)
 		for indice in range(faltantes):
 			var jugador = construir_jugador(equipo_id, nombre_equipo, reputacion, total_actual + indice)
-			if insertar_jugador(jugador):
+			var res = PlayerRepository.insert_player(jugador)
+			if res.get("success", false):
 				total_insertados += 1
 	return total_insertados
 
 func construir_jugador(equipo_id: int, nombre_equipo: String, reputacion: int, orden_plantilla: int) -> Dictionary:
 	return PlayerGeneration.build_player(equipo_id, nombre_equipo, reputacion, orden_plantilla)
 
-func insertar_jugador(jugador: Dictionary) -> bool:
-	var columnas: Array[String] = []
-	var valores_sql: Array[String] = []
-	for columna in jugadores_columns:
-		var nombre_columna = str(columna.get("name", ""))
-		if nombre_columna == "" or int(columna.get("pk", 0)) == 1:
-			continue
 
-		var valor = resolver_valor_columna(columna, jugador)
-		if valor == null and int(columna.get("notnull", 0)) == 0:
-			continue
-
-		columnas.append(nombre_columna)
-		valores_sql.append(a_sql_literal(valor))
-
-	if columnas.is_empty():
-		return false
-
-	var columnas_sql: Array[String] = []
-	for columna in columnas:
-		columnas_sql.append(DatabaseManager.quote_identifier(columna))
-
-	var query = "INSERT INTO jugadores (%s) VALUES (%s)" % [",".join(columnas_sql), ",".join(valores_sql)]
-	return DatabaseManager.execute(query)
-
-func resolver_valor_columna(columna: Dictionary, jugador: Dictionary):
-	var nombre_columna = str(columna.get("name", ""))
-	if jugador.has(nombre_columna):
-		return jugador[nombre_columna]
-
-	var tipo = str(columna.get("type", "")).to_upper()
-	if int(columna.get("notnull", 0)) == 1:
-		if "INT" in tipo:
-			return 0
-		if "REAL" in tipo or "FLOA" in tipo or "DOUB" in tipo:
-			return 0.0
-		return ""
-	return null
-
-func a_sql_literal(valor) -> String:
-	if valor == null:
-		return "NULL"
-	if valor is String:
-		return "'%s'" % DatabaseManager.escape_text(valor)
-	if valor is bool:
-		return "1" if valor else "0"
-	return str(valor)
 
 func cargar_opciones(selector: OptionButton, opciones: Array[String]) -> void:
 	selector.clear()

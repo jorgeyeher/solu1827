@@ -33,6 +33,8 @@ func _ready() -> void:
 	# Conectamos las señales de los botones a sus funciones tácticas
 	btn_regresar.pressed.connect(_volver_al_menu_carrera)
 	btn_clasificaciones.pressed.connect(_abrir_clasificaciones)
+	if btn_historial:
+		btn_historial.pressed.connect(_abrir_historial)
 
 func configurar_estilos() -> void:
 	vbox_principal.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -133,5 +135,14 @@ func _volver_al_menu_carrera() -> void:
 	get_tree().change_scene_to_file(MENU_CARRERA_SCENE)
 
 func _abrir_clasificaciones() -> void:
-	# Nos aseguramos de saltar a la escena que armamos con la consulta SQL
 	get_tree().change_scene_to_file(CLASIFICACIONES_SCENE)
+
+func _ready_extra_conexiones() -> void:
+	# Historial (si el botón existe)
+	if btn_historial:
+		btn_historial.pressed.connect(_abrir_historial)
+
+func _abrir_historial() -> void:
+	var HISTORIAL_SCENE := "res://scenes/career/historial.tscn"
+	if ResourceLoader.exists(HISTORIAL_SCENE):
+		get_tree().change_scene_to_file(HISTORIAL_SCENE)

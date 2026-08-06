@@ -11,7 +11,8 @@ extends Control
 @onready var card_visitante = $MarginContainer/Root/Partido/MatchRow/Visitante/Card
 @onready var label_estadio = $MarginContainer/Root/Partido/Info/Estadio
 @onready var label_fecha = $MarginContainer/Root/Partido/Info/Fecha
-@onready var btn_ir_partido = $MarginContainer/Root/Partido/BtnIrPartido
+@onready var btn_ir_partido = $MarginContainer/Root/Partido/BtnRow/BtnIrPartido
+@onready var btn_avanzar_jornada = $MarginContainer/Root/Partido/BtnRow/BtnAvanzarJornada
 @onready var btn_club = $MarginContainer/Root/Secciones/Grid/BtnClub
 @onready var btn_plantilla = $MarginContainer/Root/Secciones/Grid/BtnPlantilla
 @onready var btn_cantera = $MarginContainer/Root/Secciones/Grid/BtnCantera
@@ -23,30 +24,71 @@ func _ready() -> void:
 	GameManager.save_game("res://scenes/career/menu_plantilla.tscn")
 	cargar_dashboard()
 
+	if OS.is_debug_build():
+		var btn_reset_dev = Button.new()
+		btn_reset_dev.text = "Restaurar datos"
+		apply_button_theme(btn_reset_dev, Color("ff4d4d"), Color("ff6666"), Color("cc0000"), Color.WHITE, Color("660000"))
+		btn_reset_dev.pressed.connect(pedir_confirmacion_reset)
+		$MarginContainer/Root/Header.add_child(btn_reset_dev)
+
+func pedir_confirmacion_reset() -> void:
+	var dialog = ConfirmationDialog.new()
+	dialog.title = "Confirmar Reset"
+	dialog.dialog_text = "Restaurar la base de datos a su estado original para este save?"
+	dialog.confirmed.connect(ejecutar_reset_datos)
+	add_child(dialog)
+	dialog.popup_centered()
+
+func ejecutar_reset_datos() -> void:
+	if GameManager.save_id == "":
+		mostrar_error("No hay un save activo para restaurar.")
+		return
+	
+	DatabaseManager.db.close_db()
+	var dest_db = "user://saves/" + GameManager.save_id + "/career.sqlite"
+	var dir = DirAccess.open("user://saves/" + GameManager.save_id)
+	if dir:
+		dir.remove("career.sqlite")
+		
+	var res_dir = DirAccess.open("res://")
+	if res_dir:
+		res_dir.copy("res://datos/PRUEBA.db", dest_db)
+		
+	DatabaseManager.connect_to_db(dest_db)
+	label_estado.text = "Datos restaurados con exito."
+	cargar_dashboard()
+
 func configurar_estilos() -> void:
-	apply_button_theme(btn_guardar, Color("e6efe3"), Color("eef6eb"), Color("d9e4d4"), Color("183018"), Color("91a78a"))
-	apply_button_theme(btn_menu_principal, Color("1d2f18"), Color("274121"), Color("12210f"), Color("f7fff5"), Color("35512f"))
-	apply_button_theme(btn_ir_partido, Color("42a5f5"), Color("63b4f8"), Color("2e8fe1"), Color("082033"), Color("1566a8"))
-	label_manager.add_theme_color_override("font_color", Color("162414"))
-	label_club.add_theme_color_override("font_color", Color("162414"))
-	label_estado.add_theme_color_override("font_color", Color("243122"))
-	label_estadio.add_theme_color_override("font_color", Color("243122"))
-	label_fecha.add_theme_color_override("font_color", Color("243122"))
+	apply_button_theme(btn_guardar, Color("2a3d27"), Color("3a5434"), Color("1d2c1a"), Color("c8e6c9"), Color("4a7a44"))
+	apply_button_theme(btn_menu_principal, Color("1a1e25"), Color("222830"), Color("111419"), Color("90a4ae"), Color("37474f"))
+	apply_button_theme(btn_ir_partido, Color("1565c0"), Color("1976d2"), Color("0d47a1"), Color("e3f2fd"), Color("0d47a1"))
+	apply_button_theme(btn_avanzar_jornada, Color("e65100"), Color("f4511e"), Color("bf360c"), Color("fff3e0"), Color("bf360c"))
 
-	card_local.add_theme_stylebox_override("panel", make_style(Color("7ed957"), 0))
-	card_visitante.add_theme_stylebox_override("panel", make_style(Color("7ed957"), 0))
-	label_local.add_theme_color_override("font_color", Color("10210d"))
-	label_visitante.add_theme_color_override("font_color", Color("10210d"))
+	label_manager.add_theme_color_override("font_color", Color("b0bec5"))
+	label_manager.add_theme_font_size_override("font_size", 16)
+	label_club.add_theme_color_override("font_color", Color("81c784"))
+	label_club.add_theme_font_size_override("font_size", 18)
+	label_estado.add_theme_color_override("font_color", Color("90a4ae"))
+	label_estadio.add_theme_color_override("font_color", Color("78909c"))
+	label_fecha.add_theme_color_override("font_color", Color("78909c"))
 
-	apply_button_theme(btn_club, Color("7ed957"), Color("a7ef73"), Color("72c84f"), Color("10210d"), Color("4b8e2f"), 0)
-	apply_button_theme(btn_plantilla, Color("c0ff5b"), Color("d8ff92"), Color("9dd641"), Color("10210d"), Color("7cab2f"), 0)
-	apply_button_theme(btn_cantera, Color("c0ff5b"), Color("d8ff92"), Color("9dd641"), Color("10210d"), Color("7cab2f"), 0)
-	apply_button_theme(btn_empleados, Color("7ed957"), Color("a7ef73"), Color("72c84f"), Color("10210d"), Color("4b8e2f"), 0)
+	card_local.add_theme_stylebox_override("panel", make_style(Color("162d1a"), 8, Color("2e7d32"), 2))
+	card_visitante.add_theme_stylebox_override("panel", make_style(Color("162d1a"), 8, Color("2e7d32"), 2))
+	label_local.add_theme_color_override("font_color", Color("a5d6a7"))
+	label_local.add_theme_font_size_override("font_size", 20)
+	label_visitante.add_theme_color_override("font_color", Color("a5d6a7"))
+	label_visitante.add_theme_font_size_override("font_size", 20)
+
+	apply_button_theme(btn_club, Color("1b2e1e"), Color("243d27"), Color("12201a"), Color("81c784"), Color("2e7d32"), 6)
+	apply_button_theme(btn_plantilla, Color("1b2c1f"), Color("243d27"), Color("12201a"), Color("a5d6a7"), Color("388e3c"), 6)
+	apply_button_theme(btn_cantera, Color("1b2c1f"), Color("243d27"), Color("12201a"), Color("a5d6a7"), Color("388e3c"), 6)
+	apply_button_theme(btn_empleados, Color("1b2e1e"), Color("243d27"), Color("12201a"), Color("81c784"), Color("2e7d32"), 6)
 
 func conectar_botones() -> void:
 	btn_guardar.pressed.connect(guardar_partida)
 	btn_menu_principal.pressed.connect(volver_al_menu_principal)
 	btn_ir_partido.pressed.connect(ir_al_partido)
+	btn_avanzar_jornada.pressed.connect(abrir_avanzar_jornada)
 	btn_club.pressed.connect(abrir_club)
 	btn_plantilla.pressed.connect(abrir_plantilla)
 	btn_cantera.pressed.connect(func(): mostrar_modulo("CANTERA"))
@@ -68,8 +110,10 @@ func cargar_dashboard() -> void:
 		label_estadio.text = "Estadio: calendario no generado"
 		label_fecha.text = "Fecha: pendiente"
 		label_estado.text = "Aun no hay un proximo partido. Genera el calendario para continuar."
+		btn_ir_partido.disabled = true
 		return
 
+	btn_ir_partido.disabled = false
 	label_local.text = str(partido.get("local", "LOCAL"))
 	label_visitante.text = str(partido.get("visitante", "VISITANTE"))
 	label_estadio.text = "Estadio: %s" % str(partido.get("estadio", "Por definir"))
@@ -78,6 +122,13 @@ func cargar_dashboard() -> void:
 		str(partido.get("temporada", 1))
 	]
 	label_estado.text = "Siguiente compromiso en %s." % str(partido.get("liga", "tu liga"))
+	
+	# Mostrar saldo financiero si la tabla existe
+	var saldo_rows = DatabaseManager.fetch_rows(
+		"SELECT name FROM sqlite_master WHERE type='table' AND name='movimientos_financieros'")
+	if not saldo_rows.is_empty():
+		var saldo = FinanceService.get_saldo_actual(GameManager.equipo_jugador_id)
+		label_estado.text += "\nSaldo: $%s" % _formato_dinero(saldo)
 
 func obtener_proximo_partido(equipo_id: int) -> Dictionary:
 	var query = """
@@ -92,8 +143,8 @@ func obtener_proximo_partido(equipo_id: int) -> Dictionary:
 		JOIN ligas l ON l.id = p.torneo_id
 		JOIN equipos el ON el.id = p.equipo_local_id
 		JOIN equipos ev ON ev.id = p.equipo_visita_id
-		WHERE p.equipo_local_id = %d OR p.equipo_visita_id = %d
-		ORDER BY p.temporada ASC, p.jornada ASC
+		WHERE (p.equipo_local_id = %d OR p.equipo_visita_id = %d) AND p.jugado = 0
+		ORDER BY p.temporada ASC, p.jornada ASC, p.id ASC
 		LIMIT 1
 	""" % [equipo_id, equipo_id]
 
@@ -103,6 +154,23 @@ func obtener_proximo_partido(equipo_id: int) -> Dictionary:
 	return resultados[0]
 
 func ir_al_partido() -> void:
+	var titulares = DatabaseManager.fetch_rows("SELECT * FROM jugadores WHERE equipo_id = %d AND es_titular = 1" % GameManager.equipo_jugador_id)
+	if titulares.size() != 11:
+		mostrar_error("Alineacion invalida: Debes tener 11 titulares.")
+		return
+		
+	var has_pt = false
+	for t in titulares:
+		var r = str(t.get("rol_tactico", ""))
+		var p = str(t.get("posicion_principal", ""))
+		if r == "PT" or p == "PT" or p == "POR":
+			has_pt = true
+			break
+			
+	if not has_pt:
+		mostrar_error("Alineacion invalida: Debes tener un portero (PT).")
+		return
+
 	get_tree().change_scene_to_file("res://scenes/match/simulacion_partido.tscn")
 
 func mostrar_modulo(nombre_modulo: String) -> void:
@@ -113,6 +181,18 @@ func abrir_club() -> void:
 
 func abrir_plantilla() -> void:
 	get_tree().change_scene_to_file("res://scenes/career/submenu_plantilla.tscn")
+
+func abrir_avanzar_jornada() -> void:
+	get_tree().change_scene_to_file("res://scenes/career/avanzar_jornada.tscn")
+
+func _formato_dinero(valor: int) -> String:
+	var s := str(abs(valor))
+	var resultado := ""
+	for i in range(s.length()):
+		if i > 0 and (s.length() - i) % 3 == 0:
+			resultado += ","
+		resultado += s[i]
+	return ("-" if valor < 0 else "") + resultado
 
 func guardar_partida() -> void:
 	if GameManager.save_game("res://scenes/career/menu_plantilla.tscn"):

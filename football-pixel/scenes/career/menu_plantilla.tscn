@@ -18,67 +18,60 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.96, 0.96, 0.94, 1)
-
-[node name="Pattern" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(1, 1, 1, 0)
+color = Color(0.078, 0.094, 0.07, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 16.0
-offset_right = -20.0
-offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 18
 
 [node name="Root" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 14
+theme_override_constants/separation = 16
 
-[node name="Header" type="VBoxContainer" parent="MarginContainer/Root"]
+[node name="Header" type="HBoxContainer" parent="MarginContainer/Root"]
 layout_mode = 2
+theme_override_constants/separation = 12
 
 [node name="Manager" type="Label" parent="MarginContainer/Root/Header"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Manager: -"
-horizontal_alignment = 1
 
 [node name="Club" type="Label" parent="MarginContainer/Root/Header"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Club: -"
-horizontal_alignment = 1
+horizontal_alignment = 2
 
 [node name="BtnGuardar" type="Button" parent="MarginContainer/Root/Header"]
+custom_minimum_size = Vector2(100, 36)
 layout_mode = 2
 text = "GUARDAR"
 
 [node name="BtnMenuPrincipal" type="Button" parent="MarginContainer/Root/Header"]
+custom_minimum_size = Vector2(130, 36)
 layout_mode = 2
-text = "MENU PRINCIPAL"
+text = "MENÚ PRINCIPAL"
+
+[node name="Sep0" type="HSeparator" parent="MarginContainer/Root"]
+layout_mode = 2
 
 [node name="Partido" type="VBoxContainer" parent="MarginContainer/Root"]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 10
 
 [node name="Titulo" type="Label" parent="MarginContainer/Root/Partido"]
 layout_mode = 2
-text = "PROXIMO PARTIDO"
+text = "PRÓXIMO PARTIDO"
 horizontal_alignment = 1
-
-[node name="BtnIrPartido" type="Button" parent="MarginContainer/Root/Partido"]
-custom_minimum_size = Vector2(0, 56)
-layout_mode = 2
-text = "IR AL PARTIDO"
 
 [node name="MatchRow" type="HBoxContainer" parent="MarginContainer/Root/Partido"]
 layout_mode = 2
@@ -90,7 +83,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Card" type="PanelContainer" parent="MarginContainer/Root/Partido/MatchRow/Local"]
-custom_minimum_size = Vector2(0, 130)
+custom_minimum_size = Vector2(0, 110)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -116,7 +109,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Card" type="PanelContainer" parent="MarginContainer/Root/Partido/MatchRow/Visitante"]
-custom_minimum_size = Vector2(0, 130)
+custom_minimum_size = Vector2(0, 110)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -142,6 +135,25 @@ text = "Estadio: -"
 layout_mode = 2
 text = "Fecha: -"
 
+[node name="BtnRow" type="HBoxContainer" parent="MarginContainer/Root/Partido"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="BtnIrPartido" type="Button" parent="MarginContainer/Root/Partido/BtnRow"]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "IR AL PARTIDO"
+
+[node name="BtnAvanzarJornada" type="Button" parent="MarginContainer/Root/Partido/BtnRow"]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "AVANZAR JORNADA"
+
+[node name="Sep1" type="HSeparator" parent="MarginContainer/Root"]
+layout_mode = 2
+
 [node name="Secciones" type="VBoxContainer" parent="MarginContainer/Root"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -153,28 +165,28 @@ size_flags_vertical = 3
 columns = 2
 
 [node name="BtnClub" type="Button" parent="MarginContainer/Root/Secciones/Grid"]
-custom_minimum_size = Vector2(0, 120)
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "CLUB"
 
 [node name="BtnPlantilla" type="Button" parent="MarginContainer/Root/Secciones/Grid"]
-custom_minimum_size = Vector2(0, 120)
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "PLANTILLA"
 
 [node name="BtnCantera" type="Button" parent="MarginContainer/Root/Secciones/Grid"]
-custom_minimum_size = Vector2(0, 120)
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "CANTERA"
 
 [node name="BtnEmpleados" type="Button" parent="MarginContainer/Root/Secciones/Grid"]
-custom_minimum_size = Vector2(0, 120)
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

@@ -157,11 +157,39 @@ func cargar_plantilla() -> void:
 
 	reconstruir_formacion()
 
-func reconstruir_formacion() -> void:
-	once_actual = seleccionar_once(plantilla_jugadores, formacion_actual)
+func reconstruir_formacion(mantener_actuales: bool = false) -> void:
+	if mantener_actuales and not once_actual.is_empty():
+		var old_once = once_actual.duplicate()
+		var disponibles = plantilla_jugadores.duplicate()
+		once_actual.clear()
+		
+		for item in FORMACIONES.get(formacion_actual, []):
+			var slot = str(item.get("slot", ""))
+			if old_once.has(slot):
+				once_actual[slot] = old_once[slot]
+				quitar_jugador_de_array(disponibles, int(old_once[slot].get("id", -1)))
+				old_once.erase(slot)
+		
+		for item in FORMACIONES.get(formacion_actual, []):
+			var slot = str(item.get("slot", ""))
+			if not once_actual.has(slot):
+				var jugador = extraer_mejor_para_posiciones(disponibles, item.get("matches", []))
+				if jugador.is_empty() and not disponibles.is_empty():
+					jugador = disponibles.pop_front()
+				if not jugador.is_empty():
+					once_actual[slot] = jugador
+	else:
+		once_actual = seleccionar_once(plantilla_jugadores, formacion_actual)
+		
 	actualizar_banca_desde_once()
 	actualizar_flags_titular()
 	renderizar_estado_actual()
+
+func quitar_jugador_de_array(arr: Array, id: int) -> void:
+	for i in range(arr.size()):
+		if int(arr[i].get("id", -1)) == id:
+			arr.remove_at(i)
+			return
 
 func actualizar_banca_desde_once() -> void:
 	var titulares_ids: Dictionary = {}
@@ -618,7 +646,7 @@ func limpiar_banca() -> void:
 func _al_cambiar_formacion(index: int) -> void:
 	formacion_actual = selector_formacion.get_item_text(index)
 	if not plantilla_jugadores.is_empty():
-		reconstruir_formacion()
+		reconstruir_formacion(true)
 
 func volver_al_menu_partida() -> void:
 	get_tree().change_scene_to_file("res://scenes/career/menu_plantilla.tscn")

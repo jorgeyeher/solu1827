@@ -55,7 +55,12 @@ const PIES_POR_POSICION := {
 	"DC": {"Diestro": 58, "Zurdo": 20, "Ambidiestro": 22}
 }
 
+static var current_seed: int = 0
+
 static func build_player(equipo_id: int, nombre_equipo: String, reputacion: int, orden_plantilla: int) -> Dictionary:
+	if current_seed != 0:
+		seed(current_seed + orden_plantilla + (equipo_id * 1000))
+		
 	var posicion = SQUAD_TEMPLATE[orden_plantilla % SQUAD_TEMPLATE.size()]
 	var edad = randi_range(16, 36)
 	var calidad_potencial = calcular_potencial(reputacion)

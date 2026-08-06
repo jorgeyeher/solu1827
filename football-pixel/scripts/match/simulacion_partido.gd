@@ -93,16 +93,24 @@ func cargar_titulares() -> void:
 		datos_local = DatabaseManager.db.query_result[0].duplicate(true)
 		label_local.text = str(datos_local["nombre"]).left(12).to_upper()
 		
-	DatabaseManager.db.query("SELECT * FROM jugadores WHERE equipo_id = " + str(equipo_local_id) + " LIMIT 11")
-	titulares_local = DatabaseManager.db.query_result.duplicate(true)
+	DatabaseManager.db.query("SELECT * FROM jugadores WHERE equipo_id = " + str(equipo_local_id) + " AND es_titular = 1")
+	if DatabaseManager.db.query_result.size() == 11:
+		titulares_local = DatabaseManager.db.query_result.duplicate(true)
+	else:
+		DatabaseManager.db.query("SELECT * FROM jugadores WHERE equipo_id = " + str(equipo_local_id) + " LIMIT 11")
+		titulares_local = DatabaseManager.db.query_result.duplicate(true)
 	
 	DatabaseManager.db.query("SELECT * FROM equipos WHERE id = " + str(equipo_visita_id))
 	if DatabaseManager.db.query_result.size() > 0:
 		datos_visita = DatabaseManager.db.query_result[0].duplicate(true)
 		label_visitante.text = str(datos_visita["nombre"]).left(12).to_upper()
 		
-	DatabaseManager.db.query("SELECT * FROM jugadores WHERE equipo_id = " + str(equipo_visita_id) + " LIMIT 11")
-	titulares_visita = DatabaseManager.db.query_result.duplicate(true)
+	DatabaseManager.db.query("SELECT * FROM jugadores WHERE equipo_id = " + str(equipo_visita_id) + " AND es_titular = 1")
+	if DatabaseManager.db.query_result.size() == 11:
+		titulares_visita = DatabaseManager.db.query_result.duplicate(true)
+	else:
+		DatabaseManager.db.query("SELECT * FROM jugadores WHERE equipo_id = " + str(equipo_visita_id) + " LIMIT 11")
+		titulares_visita = DatabaseManager.db.query_result.duplicate(true)
 
 func procesar_minuto() -> void:
 	if pausa_visual_activa: 
@@ -145,109 +153,52 @@ func procesar_minuto() -> void:
 		GameManager.mvp_goles = randi_range(1, 2) if goles_local > 0 else 0
 		GameManager.mvp_valoracion = randf_range(8.0, 9.9)
 		
+		
 		# >>> EL ACTA ARBITRAL: ACTUALIZA LA BASE DE DATOS <<<
-		_guardar_acta_arbitral()
-		
-		# 2. Hacemos el cambio de pantalla
-		get_tree().change_scene_to_file("res://scenes/match/resumen_partido.tscn")
+		if _guardar_acta_arbitral():
+			get_tree().change_scene_to_file("res://scenes/match/resumen_partido.tscn")
+		else:
+			comentarios.text = "¡ERROR! No se pudo guardar el partido."
 
-func _guardar_acta_arbitral() -> void:
-	# 1. ACTUALIZAR EL PARTIDO (Ya se jugó y guardamos el marcador)
-	var query_partido = "UPDATE partidos SET jugado = 1, goles_local = %d, goles_visita = %d WHERE id = %d" % [goles_local, goles_visita, partido_id_actual]
-	DatabaseManager.db.query(query_partido)
-	
-	# 2. CALCULAR PUNTOS Y RESULTADOS
-	var pts_local = 0
-	var pts_visita = 0
-	var vic_local = 0
-	var vic_visita = 0
-	var emp_local = 0
-	var emp_visita = 0
-	var der_local = 0
-	var der_visita = 0
-	
-	if goles_local > goles_visita:
-		pts_local = 3
-		vic_local = 1
-		der_visita = 1
-	elif goles_visita > goles_local:
-		pts_visita = 3
-		vic_visita = 1
-		der_local = 1
+func _guardar_acta_arbitral() -> bool:
+	var jornada = GameManager.jornada_actual
+	var res = MatchPostService.post_match(
+		partido_id_actual,
+		goles_local,
+		goles_visita,
+		equipo_local_id,
+		equipo_visita_id,
+		torneo_actual_id,
+		temporada_actual,
+		jornada,
+		titulares_local,
+		titulares_visita,
+		anotadores_partido,
+		asistentes_partido,
+		GameManager.equipo_jugador_id
+	)
+	if res["success"]:
+		print("Acta guardada correctamente (Jornada %d, Temp. %d)." % [jornada, temporada_actual])
 	else:
-		pts_local = 1
-		pts_visita = 1
-		emp_local = 1
-		emp_visita = 1
-		
-	# ====================================================================
-	# 3. EL TRUCO: CREAR LAS FILAS SI ES SU PRIMER PARTIDO DE LA TEMPORADA
-	# ====================================================================
-	var query_crear_local = "INSERT OR IGNORE INTO estadisticas_liga (equipo_id, torneo_id, temporada) VALUES (%d, %d, %d)" % [equipo_local_id, torneo_actual_id, temporada_actual]
-	DatabaseManager.db.query(query_crear_local)
-	
-	var query_crear_visita = "INSERT OR IGNORE INTO estadisticas_liga (equipo_id, torneo_id, temporada) VALUES (%d, %d, %d)" % [equipo_visita_id, torneo_actual_id, temporada_actual]
-	DatabaseManager.db.query(query_crear_visita)
-	# ====================================================================
+		push_error(res["error"])
+	return res["success"]
 
-	# 4. ENVIAR PUNTOS DEL LOCAL A LA TABLA DE LIGA
-	var query_local = """
-		UPDATE estadisticas_liga 
-		SET partidos_jugados = partidos_jugados + 1,
-			victorias = victorias + %d, empates = empates + %d, derrotas = derrotas + %d,
-			goles_favor = goles_favor + %d, goles_contra = goles_contra + %d,
-			puntos = puntos + %d
-		WHERE equipo_id = %d AND torneo_id = %d AND temporada = %d
-	""" % [vic_local, emp_local, der_local, goles_local, goles_visita, pts_local, equipo_local_id, torneo_actual_id, temporada_actual]
-	DatabaseManager.db.query(query_local)
-	
-	# 5. ENVIAR PUNTOS DEL VISITANTE A LA TABLA DE LIGA
-	var query_visita = """
-		UPDATE estadisticas_liga 
-		SET partidos_jugados = partidos_jugados + 1,
-			victorias = victorias + %d, empates = empates + %d, derrotas = derrotas + %d,
-			goles_favor = goles_favor + %d, goles_contra = goles_contra + %d,
-			puntos = puntos + %d
-		WHERE equipo_id = %d AND torneo_id = %d AND temporada = %d
-	""" % [vic_visita, emp_visita, der_visita, goles_visita, goles_local, pts_visita, equipo_visita_id, torneo_actual_id, temporada_actual]
-	DatabaseManager.db.query(query_visita)
-	
-	# ====================================================================
-	# 6. ESTADÍSTICAS INDIVIDUALES DE JUGADORES
-	# ====================================================================
-	
-	# A) Sumar 1 partido jugado a todos los titulares
-	for jugador in titulares_local + titulares_visita:
-		var id_jug = int(jugador["id"])
-		DatabaseManager.db.query("UPDATE jugadores SET partidos_jugados = partidos_jugados + 1 WHERE id = %d" % id_jug)
-	
-	# B) Sumar los Goles
-	for id_goleador in anotadores_partido:
-		DatabaseManager.db.query("UPDATE jugadores SET goles = goles + 1 WHERE id = %d" % id_goleador)
-		
-	# C) Sumar las Asistencias
-	for id_asistente in asistentes_partido:
-		DatabaseManager.db.query("UPDATE jugadores SET asistencias = asistencias + 1 WHERE id = %d" % id_asistente)
-
-	# D) Porterías en Cero (Bonus para el portero si no recibió gol)
-	if goles_visita == 0 and titulares_local.size() > 0:
-		var id_portero_local = int(titulares_local[0]["id"]) # Asumiendo que el índice 0 es el portero
-		DatabaseManager.db.query("UPDATE jugadores SET porterias_cero = porterias_cero + 1 WHERE id = %d" % id_portero_local)
-
-	if goles_local == 0 and titulares_visita.size() > 0:
-		var id_portero_visita = int(titulares_visita[0]["id"])
-		DatabaseManager.db.query("UPDATE jugadores SET porterias_cero = porterias_cero + 1 WHERE id = %d" % id_portero_visita)
-	
-	print("Acta arbitral y estadísticas individuales guardadas correctamente.")
+func obtener_portero(equipo: Array) -> Dictionary:
+	for j in equipo:
+		if str(j.get("rol_tactico", "")) == "PT" or str(j.get("posicion_principal", "")) == "PT" or str(j.get("posicion_principal", "")) == "POR":
+			return j
+	if equipo.size() > 0:
+		return equipo[0]
+	return {}
 
 func calcular_poder_equipo(plantilla: Array) -> float:
 	var poder_total = 0.0
 	for jugador in plantilla:
-		var moral = float(jugador.get("moral", 80)) / 100.0
-		var pase = float(jugador.get("pase_corto", 50))
+		var factor  = EnergyMoralService.get_rendimiento_factor(jugador)
+		var pase    = float(jugador.get("pase_corto", 50))
 		var control = float(jugador.get("control_balon", 50))
-		var vision = float(jugador.get("vision_juego", 50))
-		poder_total += (pase + control + vision) * moral
+		var vision  = float(jugador.get("vision_juego", 50))
+		poder_total += (pase + control + vision) * factor
 	return poder_total
 
 func simular_evento_real() -> void:
@@ -293,7 +244,9 @@ func intentar_disparo(atacantes: Array, defensores: Array, es_local: bool) -> vo
 		
 	var indice_aleatorio = randi() % atacantes.size()
 	var tirador = atacantes[indice_aleatorio]
-	var portero_rival = defensores[0] 
+	var portero_rival = obtener_portero(defensores)
+	if portero_rival.is_empty():
+		return
 	
 	var moral_tirador = float(tirador.get("moral", 80)) / 100.0
 	var moral_portero = float(portero_rival.get("moral", 80)) / 100.0

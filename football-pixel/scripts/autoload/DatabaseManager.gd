@@ -7,9 +7,19 @@ func _ready() -> void:
 	db = SQLite.new()
 	db.path = db_name
 	db.open_db()
-	ensure_player_schema()
-
+	DatabaseMigrator.run_migrations()
+	PlayerRepository.clear_cache()
 	print("Base de datos conectada con exito.")
+
+func connect_to_db(new_path: String) -> void:
+	if db != null:
+		db.close_db()
+	db_name = new_path
+	db.path = db_name
+	db.open_db()
+	DatabaseMigrator.run_migrations()
+	PlayerRepository.clear_cache()
+	print("Base de datos conectada: ", new_path)
 
 func is_ready() -> bool:
 	return db != null
@@ -40,59 +50,4 @@ func escape_text(value: String) -> String:
 func quote_identifier(identifier: String) -> String:
 	return "\"%s\"" % identifier.replace("\"", "\"\"")
 
-func ensure_player_schema() -> void:
-	var columnas = fetch_rows("PRAGMA table_info(jugadores)")
-	if columnas.is_empty():
-		return
 
-	var nombres := {}
-	for columna in columnas:
-		nombres[str(columna.get("name", ""))] = true
-
-	if not nombres.has("pie preferido"):
-		execute(
-			"ALTER TABLE jugadores ADD COLUMN %s TEXT NOT NULL DEFAULT 'Diestro'" %
-			quote_identifier("pie preferido")
-		)
-		nombres["pie preferido"] = true
-
-	if not nombres.has("uso de pie malo"):
-		execute(
-			"ALTER TABLE jugadores ADD COLUMN %s INTEGER NOT NULL DEFAULT 50" %
-			quote_identifier("uso de pie malo")
-		)
-		nombres["uso de pie malo"] = true
-
-	if nombres.has("pie preferido") and nombres.has("pie_preferido"):
-		execute(
-			"""
-			UPDATE jugadores
-			SET %s = CASE
-				WHEN pie_preferido = 'Derecho' THEN 'Diestro'
-				WHEN pie_preferido = 'Izquierdo' THEN 'Zurdo'
-				WHEN pie_preferido = 'Ambidiestro' THEN 'Ambidiestro'
-				ELSE pie_preferido
-			END
-			WHERE pie_preferido IS NOT NULL
-				AND TRIM(COALESCE(pie_preferido, '')) != ''
-				AND (%s IS NULL OR TRIM(COALESCE(%s, '')) = '')
-			""" % [
-				quote_identifier("pie preferido"),
-				quote_identifier("pie preferido"),
-				quote_identifier("pie preferido")
-			]
-		)
-
-	if nombres.has("uso de pie malo") and nombres.has("uso_pie_malo"):
-		execute(
-			"""
-			UPDATE jugadores
-			SET %s = uso_pie_malo
-			WHERE uso_pie_malo IS NOT NULL
-				AND (%s IS NULL OR %s = 50)
-			""" % [
-				quote_identifier("uso de pie malo"),
-				quote_identifier("uso de pie malo"),
-				quote_identifier("uso de pie malo")
-			]
-		)
